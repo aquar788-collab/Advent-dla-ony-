@@ -25,10 +25,20 @@ body:before,body:after{content:"";position:fixed;inset:0;pointer-events:none;z-i
 .pin{text-align:center;margin:0 auto 28px;max-width:420px}.pin input{padding:14px;border-radius:10px;border:1px solid #c99e4a;font-size:20px;text-align:center;width:150px;max-width:60%;background:#fffaf0}.pin button{padding:14px 20px;border:0;border-radius:10px;background:#7d1f2b;color:white;font-weight:bold;cursor:pointer;min-height:50px}.error{color:#f0b8bd;min-height:24px;margin-top:8px}
 .music{position:fixed;right:14px;bottom:14px;z-index:50;background:#f7f0df;color:#7d1f2b;border:2px solid #c99e4a;border-radius:999px;padding:11px 14px;font-family:Arial,sans-serif;font-weight:bold;box-shadow:0 8px 25px #0005;cursor:pointer}
 .spark{position:fixed;z-index:40;pointer-events:none;font-size:28px;animation:pop 1.2s ease-out forwards}@keyframes pop{0%{opacity:0;transform:translate(0,0) scale(.4)}20%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1.2) rotate(25deg)}}
+#welcome{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at top,#24483e 0,#102820 72%);display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;transition:opacity .8s ease,visibility .8s ease}.welcome-inner{width:min(620px,100%);animation:welcomeIn 1s ease both}.welcome-lights{font-size:clamp(22px,7vw,34px);letter-spacing:clamp(3px,2vw,10px);margin-bottom:28px;animation:lights 2s ease-in-out infinite alternate}.welcome-inner h1{font-size:clamp(36px,11vw,58px);color:#d7b56d;margin:0 0 18px;text-shadow:0 2px 22px #0008}.welcome-inner p{font-size:clamp(17px,4.5vw,21px);line-height:1.65;margin:0 auto 28px;max-width:500px}.welcome-small{font-size:13px!important;opacity:.65;margin-top:22px!important}.welcome-btn{max-width:360px;margin:0 auto;background:#7d1f2b;border:1px solid #d7b56d}.welcome-hidden{opacity:0;visibility:hidden;pointer-events:none}.fade-away{animation:fadeAway .8s ease forwards}@keyframes welcomeIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}@keyframes fadeAway{to{opacity:0;transform:scale(1.03)}}@keyframes lights{from{opacity:.7}to{opacity:1;text-shadow:0 0 18px #d7b56d}}
 @media(max-width:480px){.wrap{padding-top:20px}.card{border-radius:18px}.music{right:10px;bottom:10px;font-size:13px;padding:10px 12px}}
 </style>
 </head>
 <body>
+<div id="welcome"><div class="welcome-inner">
+<div class="welcome-lights">💡 ✨ 💡 ✨ 💡 ✨ 💡</div>
+<div class="eyebrow">Mała świąteczna niespodzianka</div>
+<h1>Hej, Kochanie ❤️</h1>
+<p>Przygotowałem dla Ciebie coś małego…<br><strong>Ale najpierw musisz znać pewien sekret. 🎁</strong></p>
+<button class="btn welcome-btn" onclick="startSurprise()">Odkryj ✨</button>
+<p class="welcome-small">ps. obiecuję, że warto zajrzeć do środka 😉</p>
+</div></div>
+
 <div id="login" class="wrap"><header class="hero"><div class="eyebrow">Tylko dla Ciebie ❤️</div><h1>🔐 Dla Ciebie</h1><p>Ta strona jest małą niespodzianką. Wpisz kod PIN, żeby ją otworzyć.</p></header><div class="pin"><input id="pin" type="password" inputmode="numeric" maxlength="6" placeholder="PIN" autocomplete="off"><button onclick="unlock()">Otwórz ❤️</button><div id="error" class="error"></div></div></div>
 
 <main id="content" class="wrap" style="display:none">
@@ -62,6 +72,7 @@ body:before,body:after{content:"";position:fixed;inset:0;pointer-events:none;z-i
 
 <script>
 const PIN='2412';
+function startSurprise(){const w=document.getElementById('welcome');w.classList.add('fade-away');setTimeout(()=>{w.classList.add('welcome-hidden');document.getElementById('pin').focus()},800)}
 function unlock(){const value=document.getElementById('pin').value;if(value===PIN){document.getElementById('login').style.display='none';document.getElementById('content').style.display='block';sparkle()}else{document.getElementById('error').textContent='Hmm... to nie ten kod. ❤️';document.getElementById('pin').select()}}
 document.getElementById('pin').addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});
 function openWords(btn){document.getElementById('wordsSecret').style.display='block';document.getElementById('wordsIntro').style.display='none';btn.style.display='none';sparkle()}
